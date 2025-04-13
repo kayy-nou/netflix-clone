@@ -4,6 +4,7 @@ import './Login.css'
 import Logo from '../../assets/logo.png'
 import { login, signup } from '../../firebase'
 import netflix_spinner from '../../assets/netflix_spinner.gif'
+import { EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons"
 
 const Login = () => {
 
@@ -13,6 +14,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(true);
+  
 
   const user_auth = async (event)=>{
     event.preventDefault();
@@ -25,6 +28,7 @@ const Login = () => {
     setLoading(false);
   }
 
+  
 
   return (
     loading? <div className='login-spinner'>
@@ -38,7 +42,12 @@ const Login = () => {
           {signState==="Sign Up"?
           <input type="text" placeholder='Your Name' value={name} onChange={(e)=>{setName(e.target.value)}} />:<></>}
           <input type="email" placeholder='Email' value={email} onChange={(e)=>{setEmail(e.target.value)}} />
-          <input type="password" placeholder='Password' value={password} onChange={(e)=>{setPassword(e.target.value)}} />
+          <div className='password-form'>
+          <input type={visible ? "text" : "password"} placeholder='Password' value={password} onChange={(e)=>{setPassword(e.target.value)}} />
+            <div className='visible-icon' onClick={() => {setVisible(!visible)}}>
+               {visible ? <EyeOutlined/> : <EyeInvisibleOutlined/>}
+            </div>
+          </div>
           <button onClick={user_auth} type='submit'>{signState}</button>
           <div className="form-help">
             <div className="remember">
